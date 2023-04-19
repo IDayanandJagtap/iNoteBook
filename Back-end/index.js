@@ -7,6 +7,7 @@ const port = 8000;
 
 app.use(express.json());
 
+// Create routes
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/notes", require("./routes/notes"))
 
@@ -14,8 +15,6 @@ app.get("/", (req, res)=>{
     res.send(req.ip);
 })
 
-app.get("/users/:userId/book/:bookId", (req,res)=>{
-    res.send(req.params)
-});
+
 
 app.listen(port, ()=> console.log(`App is running on : ${port}`))

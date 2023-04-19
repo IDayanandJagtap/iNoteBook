@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+
+// Create a schema (like validations for collection)
 const UserSchema = new mongoose.Schema({
     name : {
         type: String,
@@ -20,7 +22,6 @@ const UserSchema = new mongoose.Schema({
     }
 })
 
-const users = mongoose.model("user", UserSchema);
-users.createIndexes();
 
-module.exports = users;
+// Collection in db is generally named after model name (plural form of model name);
+module.exports = mongoose.model("user", UserSchema);
