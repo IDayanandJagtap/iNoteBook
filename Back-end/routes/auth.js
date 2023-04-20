@@ -1,7 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const User = require('../models/User');
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const { body, validationResult } = require('express-validator');
+
+// Put this in .env file 
+const JWT_SECRET_KEY = "JWT_SECRET_KEY"
 
 
 // Express router method to handle routes as different modules
@@ -25,10 +30,28 @@ router.post("/", [
                 return
             }
 
+            
+
             // If everything is fine Create a user
-            const user = await User(req.body);
-            await user.save();
-            res.send(user);
+            // But first hash the password
+            const salt = await bcrypt.genSalt(10);
+            const secPass = await bcrypt.hash(req.body.password, salt);
+
+            const user = await User.create({
+                name: req.body.name,
+                email : req.body.email,
+                password: secPass
+            });
+            
+            // JWT token
+            let data = {
+                user : {
+                    id : user.id
+                }
+            }
+            const token = jwt.sign(data, JWT_SECRET_KEY)
+            res.send(token);
+
         }catch(err){
             console.error(err.message);
             res.status(500).send("Something went wrong !");
