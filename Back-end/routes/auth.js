@@ -4,13 +4,17 @@ const User = require('../models/User');
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { body, validationResult } = require('express-validator');
+const fetchUser = require("../middleware/fetchuser")
+const dotenv=  require("dotenv").config();
 
 // Put this in .env file 
-const JWT_SECRET_KEY = "JWT_SECRET_KEY"
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
 
 
 // Express router method to handle routes as different modules
 // 2nd argument is of express-validator. It is an array which has validations as its entries
+
+//! 1. Route to create a user 
 router.post("/", [
     body('email', "Please enter a valid email").isEmail(), 
     body('password', "Password should contain atleast 5 characters").isLength({min:5})
@@ -50,6 +54,7 @@ router.post("/", [
                 }
             }
             const token = jwt.sign(data, JWT_SECRET_KEY)
+            // res.append("auth-token", token);
             res.send(token);
 
         }catch(err){
@@ -59,7 +64,7 @@ router.post("/", [
 });
 
 
-// Creating a route for login
+//! 2. Creating a route for login
 router.post("/login", [
     body('email').isEmail(),
     body("password").isLength({min : 5})
@@ -94,15 +99,28 @@ router.post("/login", [
 
             let token = jwt.sign(data, JWT_SECRET_KEY);
             res.send(token);
+            // res.append("auth-token", token);
 
         }catch(err){
             console.log(err.message);
             res.status(500).send("Internal server error");
         }
     }
-
-
 )
+
+console.log(process.env.JWT_SECRET_KEY);
+
+//! 3. Create a route to fetch user info
+router.post('/getuser', fetchUser, async(req,res)=>{
+    try{
+        const userId = req.user.id;
+        const user = await User.findById(userId).select("-password");
+        res.send(user);
+    }catch(err){
+        console.log(err.message);
+        res.status(500).send("Internal server error");
+    }
+})
 
 
 module.exports = router;
