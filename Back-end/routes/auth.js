@@ -56,7 +56,53 @@ router.post("/", [
             console.error(err.message);
             res.status(500).send("Something went wrong !");
         }
-})
+});
+
+
+// Creating a route for login
+router.post("/login", [
+    body('email').isEmail(),
+    body("password").isLength({min : 5})
+    ],
+    async (req,res)=>{
+        // check errors from express-validator and return if present
+        const errors = validationResult(req);
+        if(!errors.isEmpty()){
+            res.status(400).send("Please enter valid credentials !");
+            return;
+        }
+
+        try{
+            const {email, password} = req.body;
+
+            // Find user with the entered email
+            const user = await User.findOne({email : email});
+
+            // Compare the password with the stored hash ... parameters --->(current password (string), hashed string(from db)); 
+            const passwordCompare = await bcrypt.compare(password, user.password);
+
+            // It returns true or false so check.
+            if(!passwordCompare)
+                res.status(400).send("Please enter valid login credentials !");
+
+            // Jwt token 
+            let data = {
+                user : {
+                    id : user.id
+                }
+            }
+
+            let token = jwt.sign(data, JWT_SECRET_KEY);
+            res.send(token);
+
+        }catch(err){
+            console.log(err.message);
+            res.status(500).send("Internal server error");
+        }
+    }
+
+
+)
 
 
 module.exports = router;
