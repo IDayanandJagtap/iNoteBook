@@ -7,7 +7,7 @@ const dotenv=  require("dotenv").config();
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
 
 const fetchUser = (req,res,next) =>{
-    let token = req.header("auth-token");
+    const token = req.header("auth-token");
 
     if(!token){
         res.status(401).send("Please enter a valid token !");
