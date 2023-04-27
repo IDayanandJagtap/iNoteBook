@@ -48,5 +48,54 @@ router.post("/addnote", fetchUser, [
 })
 
 
+//! Route 3 : Update existing note      --- login required 
+// Put request is made while updating
+router.put("/updatenote/:id", fetchUser, async(req, res) =>{
+
+    try{
+            const {title, description, tag} = req.body;
+
+        // Dont use new keyword while creating a object here because it will assign a new _id value to the object which will give an error of immuatable field !!!
+        // In fact don't use new Note while creating a object ... just simply create a normal object !
+        let updatedAt = new Date().getTime();
+        let updatedNote = {title, description, tag, updatedAt};
+
+        const noteId = req.params.id;
+
+        const note = await Note.findById(noteId)
+
+        if(!note){return res.status(400).send("Error : Note not found !")};
+
+        if(note.user.toString() !== req.user.id){return res.status(401).send("Not authorised")};
+
+
+        updatedNote = await Note.findByIdAndUpdate(noteId, {$set: updatedNote}, {new:true});
+
+        res.json(updatedNote);
+    }catch(err){
+        return res.status(500).send("Internal server error !");
+    }
+    
+
+
+    
+    
+})
+
+
 
 module.exports = router;
+
+/*
+{
+    "user": "644ab5e4d403663d8aa8a612",
+    "title": "My new tony note",
+    "description": "This is my new note ",
+    "tag": "Personal",
+    "_id": "644ab608d403663d8aa8a616",
+    "createdAt": "2023-04-27T17:51:04.450Z",
+    "updatedAt": "2023-04-27T17:51:04.450Z",
+    "__v": 0
+  }
+
+  */
