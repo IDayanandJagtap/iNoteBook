@@ -26,6 +26,7 @@ router.post("/addnote", fetchUser, [
         body("description", "Enter a valid description").isLength({min : 5}),
     ], 
     async(req, res)=>{
+        // Return if there are validation errors
         const errors = validationResult(req);
         if(!errors.isEmpty()){
             res.status(400).send("Bad request !");
@@ -38,7 +39,7 @@ router.post("/addnote", fetchUser, [
             const note = new Note({
                 title, description, tag, user : req.user.id,
             }) ;
-            let savedNote = await note.save();
+            const savedNote = await note.save();
             res.json(savedNote);
 
         }catch(err){
@@ -51,9 +52,8 @@ router.post("/addnote", fetchUser, [
 //! Route 3 : Update existing note      --- login required 
 // Put request is made while updating
 router.put("/updatenote/:id", fetchUser, async(req, res) =>{
-
+    const {title, description, tag} = req.body;
     try{
-            const {title, description, tag} = req.body;
 
         // Dont use new keyword while creating a object here because it will assign a new _id value to the object which will give an error of immuatable field !!!
         // In fact don't use new Note while creating a object ... just simply create a normal object !
@@ -66,36 +66,41 @@ router.put("/updatenote/:id", fetchUser, async(req, res) =>{
 
         if(!note){return res.status(400).send("Error : Note not found !")};
 
+        // Check if the user is updating his own note and not others
         if(note.user.toString() !== req.user.id){return res.status(401).send("Not authorised")};
-
 
         updatedNote = await Note.findByIdAndUpdate(noteId, {$set: updatedNote}, {new:true});
 
         res.json(updatedNote);
     }catch(err){
         return res.status(500).send("Internal server error !");
-    }
-    
+    }   
+})
 
 
-    
-    
+//! Route 4 : Delete a note      --- login required 
+// delete request is made while deleting
+router.delete("/deletenote/:id", fetchUser, async(req, res) =>{
+
+    try{
+        const noteId = req.params.id;
+
+        let note = await Note.findById(noteId)
+
+        if(!note){return res.status(400).send("Error : Note not found !")};
+
+        if(note.user.toString() !== req.user.id){return res.status(401).send("Not authorised")};
+
+
+        note = await Note.findByIdAndDelete(noteId);
+
+        res.json({"Success": "Note has been deleted", note});
+
+    }catch(err){
+        return res.status(500).send("Internal server error !");
+    }   
 })
 
 
 
 module.exports = router;
-
-/*
-{
-    "user": "644ab5e4d403663d8aa8a612",
-    "title": "My new tony note",
-    "description": "This is my new note ",
-    "tag": "Personal",
-    "_id": "644ab608d403663d8aa8a616",
-    "createdAt": "2023-04-27T17:51:04.450Z",
-    "updatedAt": "2023-04-27T17:51:04.450Z",
-    "__v": 0
-  }
-
-  */
