@@ -14,19 +14,33 @@ const NoteContext = createContext();
 
 // Create a context provider
 const NoteState = (props) => {
-    const s1 = {
-        name: "DJ",
-        age: 20
-    };
+    const notesInitial = [
+        {
+          "_id": "646579d46d50cf4674f354fd",
+          "user": "644ab5e4d403663d8aa8a612",
+          "title": "My new note",
+          "description": "This is my new note ",
+          "tag": "Personal",
+          "createdAt": "2023-05-18T01:05:24.432Z",
+          "updatedAt": "2023-05-18T01:05:24.432Z",
+          "__v": 0
+        },
+        {
+          "_id": "646579e36d50cf4674f354ff",
+          "user": "644ab5e4d403663d8aa8a612",
+          "title": "My new note 2",
+          "description": "This is my another new note",
+          "tag": "Personal",
+          "createdAt": "2023-05-18T01:05:39.157Z",
+          "updatedAt": "2023-05-18T01:05:39.157Z",
+          "__v": 0
+        }
+      ]
 
-    const [state, setState] = useState(s1)
+      const [notes, setNotes] = useState(notesInitial)
 
-    const updateVal = () => {
-        setState({ name: "another DJ" })
-    }
-
-    return (
-        <NoteContext.Provider value={{ state, updateVal }}>
+      return (
+        <NoteContext.Provider value={{ notes, setNotes }}>
             {props.children}
         </NoteContext.Provider>
 
