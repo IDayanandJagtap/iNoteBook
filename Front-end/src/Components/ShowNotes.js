@@ -1,16 +1,17 @@
 import React, {useContext} from 'react'
 import { NoteContext } from '../ContextApi/noteContext'
+import NoteItem from './NoteItem'
 
 export default function ShowNotes(){
     const noteContext = useContext(NoteContext)
-    const {notes, setNotes} = noteContext
+    const {notes} = noteContext
 
     console.log(notes)
 
     return (
-        <div>
+        <div className='row justify-content-md-center'>
             {notes.map((note)=>{
-                return note.title
+                return <NoteItem key={note._id} note={note}/>
             })}
         </div>
     )

@@ -34,6 +34,76 @@ const NoteState = (props) => {
           "createdAt": "2023-05-18T01:05:39.157Z",
           "updatedAt": "2023-05-18T01:05:39.157Z",
           "__v": 0
+        },
+        {
+          "_id": "646579e36d503cf4674f354ff",
+          "user": "644ab5e4d403663d8aa8a612",
+          "title": "My new note 2",
+          "description": "This is my another new note",
+          "tag": "Personal",
+          "createdAt": "2023-05-18T01:05:39.157Z",
+          "updatedAt": "2023-05-18T01:05:39.157Z",
+          "__v": 0
+        },
+        {
+          "_id": "6465793e36d50cf4674f354ff",
+          "user": "644ab5e4d403663d8aa8a612",
+          "title": "My new note 2",
+          "description": "This is my another new note",
+          "tag": "Personal",
+          "createdAt": "2023-05-18T01:05:39.157Z",
+          "updatedAt": "2023-05-18T01:05:39.157Z",
+          "__v": 0
+        },
+        {
+          "_id": "646579e36d50cf42674f354ff",
+          "user": "644ab5e4d403663d8aa8a612",
+          "title": "My new note 2",
+          "description": "This is my another new note",
+          "tag": "Personal",
+          "createdAt": "2023-05-18T01:05:39.157Z",
+          "updatedAt": "2023-05-18T01:05:39.157Z",
+          "__v": 0
+        },
+        {
+          "_id": "646579e536d50cf4674f354ff",
+          "user": "644ab5e4d403663d8aa8a612",
+          "title": "My new note 2",
+          "description": "This is my another new note",
+          "tag": "Personal",
+          "createdAt": "2023-05-18T01:05:39.157Z",
+          "updatedAt": "2023-05-18T01:05:39.157Z",
+          "__v": 0
+        },
+        {
+          "_id": "646579e36d3250cf4674f354ff",
+          "user": "644ab5e4d403663d8aa8a612",
+          "title": "My new note 2",
+          "description": "This is my another new note",
+          "tag": "Personal",
+          "createdAt": "2023-05-18T01:05:39.157Z",
+          "updatedAt": "2023-05-18T01:05:39.157Z",
+          "__v": 0
+        },
+        {
+          "_id": "6463579e36d50cf4674f354ff",
+          "user": "644ab5e4d403663d8aa8a612",
+          "title": "My new note 2",
+          "description": "This is my another new alkfjld;afdkl tlek lk lakdj la l kjdk jalk lkdjfkldj kljakld ldk l note",
+          "tag": "Personal",
+          "createdAt": "2023-05-18T01:05:39.157Z",
+          "updatedAt": "2023-05-18T01:05:39.157Z",
+          "__v": 0
+        },
+        {
+          "_id": "646579e36d50cf4674f34354ff",
+          "user": "644ab5e4d403663d8aa8a612",
+          "title": "My new note 2",
+          "description": "This is my another new note",
+          "tag": "Personal",
+          "createdAt": "2023-05-18T01:05:39.157Z",
+          "updatedAt": "2023-05-18T01:05:39.157Z",
+          "__v": 0
         }
       ]
 

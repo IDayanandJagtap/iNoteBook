@@ -26,8 +26,10 @@ export default function Home() {
         </div>
       </div>
 
-      <h2 className='my-4'>Your notes</h2>
+      <h2 className='mt-5 mb-4'>Your notes : </h2>
+      <div className='container p-3' style={contStyle}>
         <ShowNotes />
+      </div>
     </div>
   )
 }
