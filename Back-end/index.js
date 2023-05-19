@@ -5,6 +5,10 @@ connectToMongo();
 const app = express();
 const port = 8000;
 
+// use cors to access shared resources
+const cors = require('cors')
+app.use(cors())
+
 app.use(express.json());
 
 // Create routes
