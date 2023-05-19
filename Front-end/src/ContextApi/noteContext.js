@@ -17,6 +17,9 @@ const NoteState = (props) => {
   const host = 'http://localhost:8000'
   const [notes, setNotes] = useState([])
 
+  // During each render the whole response array gets concatenated with the notes array while results in duplicate elements
+  
+
   // Get all notes 
   const getNotes = async () => {
     let response = await fetch(`${host}/api/notes`, {
@@ -28,9 +31,9 @@ const NoteState = (props) => {
     })
 
     response = await response.json()
-    if(response.length !== notes.length)
-      setNotes(notes.concat(response));
 
+    setNotes([])
+    setNotes(notes.concat(response));
   }
 
   // Add a note 
@@ -50,15 +53,26 @@ const NoteState = (props) => {
       body : JSON.stringify(data)
     })
 
-    await response.json()
-    // console.log(response)
+    response = await response.json()
+    console.log(response)
+    setNotes(notes.concat(response));
   }
 
   // Delete a note 
-  const deleteNote = (id) => {
-    const newNotes = notes.filter((note) => { return note._id !== id })
+  const deleteNote = async(id) => {
+    let response = await fetch(`${host}/api/notes/deletenote/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type":"application/json",
+        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ0YWI1ZTRkNDAzNjYzZDhhYThhNjEyIn0sImlhdCI6MTY4MjYxNzgyOH0._qdgaHjOy7K3r5yHSQF-TtaLVWVY_kXpXuZnaQaJKJ8",
+      }
+    })
 
-    setNotes(newNotes);
+    response = await response.json()
+    console.log(response)
+  
+    const newNotes = notes.filter((note)=> {return note._id !== id})
+    setNotes(newNotes) 
   }
 
   // Update a note 
