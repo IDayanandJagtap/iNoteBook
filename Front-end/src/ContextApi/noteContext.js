@@ -14,14 +14,14 @@ const NoteContext = createContext();
 
 // Create a context provider
 const NoteState = (props) => {
-  const host = 'http://localhost:8000'
-  const [notes, setNotes] = useState([])
+  const host = 'http://localhost:8000';
+  const notesInitial = []
+  const [notes, setNotes] = useState(notesInitial)
 
-  // During each render the whole response array gets concatenated with the notes array while results in duplicate elements
-  
 
   // Get all notes 
   const getNotes = async () => {
+    // API call 
     let response = await fetch(`${host}/api/notes`, {
       method: "GET",
       headers: {
@@ -32,25 +32,25 @@ const NoteState = (props) => {
 
     response = await response.json()
 
-    setNotes([])
-    setNotes(notes.concat(response));
+    setNotes(response);
   }
 
   // Add a note 
   const addNote = async ({ title, description, tag }) => {
     const data = {
-      "title" : title,
-      "description" : description,
-      "tag" : tag
+      "title": title,
+      "description": description,
+      "tag": tag
     }
 
+    // API Call
     let response = await fetch(`${host}/api/notes/addnote`, {
       method: "POST",
       headers: {
-        "Content-Type":"application/json",
+        "Content-Type": "application/json",
         "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ0YWI1ZTRkNDAzNjYzZDhhYThhNjEyIn0sImlhdCI6MTY4MjYxNzgyOH0._qdgaHjOy7K3r5yHSQF-TtaLVWVY_kXpXuZnaQaJKJ8",
       },
-      body : JSON.stringify(data)
+      body: JSON.stringify(data)
     })
 
     response = await response.json()
@@ -59,29 +59,54 @@ const NoteState = (props) => {
   }
 
   // Delete a note 
-  const deleteNote = async(id) => {
+  const deleteNote = async (id) => {
+    // API call 
     let response = await fetch(`${host}/api/notes/deletenote/${id}`, {
       method: "DELETE",
       headers: {
-        "Content-Type":"application/json",
+        "Content-Type": "application/json",
         "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ0YWI1ZTRkNDAzNjYzZDhhYThhNjEyIn0sImlhdCI6MTY4MjYxNzgyOH0._qdgaHjOy7K3r5yHSQF-TtaLVWVY_kXpXuZnaQaJKJ8",
       }
     })
 
     response = await response.json()
     console.log(response)
-  
-    const newNotes = notes.filter((note)=> {return note._id !== id})
-    setNotes(newNotes) 
+
+    // Delete in local
+    const newNotes = notes.filter((note) => { return note._id !== id })
+    setNotes(newNotes)
   }
 
   // Update a note 
-  const updateNote = (id) => {
+  const updateNote = async (id,title,description,tag) => {
+    // API call :
+    let response = await fetch(`${host}/api/notes/updatenote/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ0YWI1ZTRkNDAzNjYzZDhhYThhNjEyIn0sImlhdCI6MTY4MjYxNzgyOH0._qdgaHjOy7K3r5yHSQF-TtaLVWVY_kXpXuZnaQaJKJ8",
+      },
+      body: JSON.stringify({title, description, tag})
+    })
+
+    response = await response.json()
+    console.log(response)
+
+    // Update the note in local 
+    const newNotes = notes.map((note) => {
+      if(note._id === id){
+        note.title = title
+        note.description = description
+        note.tag = tag
+      }
+      return note
+    })
+    setNotes(newNotes)
 
   }
 
   return (
-    <NoteContext.Provider value={{ notes, getNotes, addNote, deleteNote, updateNote }}>
+    <NoteContext.Provider value={{ notes, getNotes, addNote, deleteNote, updateNote}}>
       {props.children}
     </NoteContext.Provider>
 

@@ -30,6 +30,7 @@ export default function Home() {
       <div className='container p-3' style={contStyle}>
         <ShowNotes />
       </div>
+
     </div>
   )
 }
