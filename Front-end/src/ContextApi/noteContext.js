@@ -54,7 +54,6 @@ const NoteState = (props) => {
     })
 
     response = await response.json()
-    console.log(response)
     setNotes(notes.concat(response));
   }
 
@@ -69,8 +68,7 @@ const NoteState = (props) => {
       }
     })
 
-    response = await response.json()
-    console.log(response)
+    await response.json()
 
     // Delete in local
     const newNotes = notes.filter((note) => { return note._id !== id })
@@ -89,8 +87,7 @@ const NoteState = (props) => {
       body: JSON.stringify({title, description, tag})
     })
 
-    response = await response.json()
-    console.log(response)
+    await response.json()
 
     // Update the note in local 
     const newNotes = notes.map((note) => {

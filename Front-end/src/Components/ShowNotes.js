@@ -50,11 +50,11 @@ export default function ShowNotes() {
                             <form>
                                 <div className="mb-3">
                                     <label htmlFor="title" className="form-label">Title : </label>
-                                    <input type="text" className="form-control" id="title" name="title" value={note.title} onChange={handleOnChange} />
+                                    <input type="text" className="form-control" id="title" name="title" value={note.title} onChange={handleOnChange}  minLength={5} required />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="description" className="form-label">Description : </label>
-                                    <input type="text" className="form-control" id="description" name="description" value={note.description} onChange={handleOnChange} />
+                                    <input type="text" className="form-control" id="description" name="description" value={note.description} onChange={handleOnChange}  minLength={5} required/>
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="tag" className="form-label">Tag : </label>
@@ -72,6 +72,7 @@ export default function ShowNotes() {
 
             {/* Show note items */}
             <div className='row justify-content-md-center'>
+                {notes.length === 0 && "No notes to display "}
                 {notes.map((note) => {
                     return <NoteItem key={note._id} note={note} editNote={editNote} />
                 })}
