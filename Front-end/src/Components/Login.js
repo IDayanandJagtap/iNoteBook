@@ -30,7 +30,6 @@ const Login = ({showAlert}) => {
             body: JSON.stringify({ email: credentials.email, password: credentials.password })
         });
         response = await response.json()
-        console.log(response)
 
         if(response.success === "True"){
             localStorage.setItem("token", response.token)
