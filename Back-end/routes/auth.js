@@ -15,7 +15,7 @@ const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
 // 2nd argument is of express-validator. It is an array which has validations as its entries
 
 //! 1. Route to create a user 
-router.post("/", [
+router.post("/signup", [
     body('email', "Please enter a valid email").isEmail(), 
     body('password', "Password should contain atleast 5 characters").isLength({min:5})
     ],
@@ -23,14 +23,14 @@ router.post("/", [
         const errors = validationResult(req);
         // If there are errors ..log them
         if(!errors.isEmpty()){
-            res.status(400).json( errors);
+            res.status(400).json( {success: "False", error: errors});
             return;
         }
         // Check if the user is already present(email)
         try{
             const olduser = await User.findOne({email: req.body.email});
             if(olduser){
-                res.status(400).send("User already exists !");
+                res.status(400).send({success: "False", error: "User already exists !"});
                 return
             }
 
@@ -55,11 +55,11 @@ router.post("/", [
             }
             const token = jwt.sign(data, JWT_SECRET_KEY)
             // res.append("auth-token", token);
-            res.send(token);
+            res.send({success: "True", token: token});
 
         }catch(err){
             console.error(err.message);
-            res.status(500).send("Something went wrong !");
+            res.status(500).send({success: "False", error: "Something went wrong !"});
         }
 });
 
@@ -73,7 +73,7 @@ router.post("/login", [
         // check errors from express-validator and return if present
         const errors = validationResult(req);
         if(!errors.isEmpty()){
-            res.status(400).send("Please enter valid credentials !");
+            res.status(400).send({success: "False", error : "Please enter valid credentials !"});
             return;
         }
 
@@ -88,7 +88,7 @@ router.post("/login", [
 
             // It returns true or false so check.
             if(!passwordCompare)
-                res.status(400).send("Please enter valid login credentials !");
+                res.status(400).send({success: "False" , error : "Please enter valid login credentials !"});
 
             // Jwt token 
             let data = {
@@ -98,12 +98,12 @@ router.post("/login", [
             }
 
             let token = jwt.sign(data, JWT_SECRET_KEY);
-            res.send(token);
+            res.send({success: "True", token: token});
             // res.append("auth-token", token);
 
         }catch(err){
             console.log(err.message);
-            res.status(500).send("Internal server error");
+            res.status(500).send({success: "False" , error : "Internal server error"});
         }
     }
 )

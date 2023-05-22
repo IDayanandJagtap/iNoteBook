@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { NoteContext, NoteState } from '../ContextApi/noteContext'
+import { NoteContext } from '../ContextApi/noteContext'
 
 export default function AddNote() {
     const [note, setNote] = useState({title: "", description: "", tag: ""})
