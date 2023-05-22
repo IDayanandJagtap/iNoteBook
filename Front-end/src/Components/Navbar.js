@@ -1,16 +1,20 @@
-import React, {useEffect} from "react"
-import{Link, useLocation} from "react-router-dom"
+import React from "react"
+import{Link, useLocation, useNavigate} from "react-router-dom"
 
 // React-router-dom provides a hook useLocation that returns a object with location details including pathname ... using it we can set active state of the navbar button(links).
 // We have to use useEffect hook as well to get the current location on every new render
 
 
-export default function Navbar() {
+export default function Navbar({showAlert}) {
     let location = useLocation(); 
-    
-    useEffect(()=>{
-        //console.log(location.pathname)
-    }, [location]);
+    const navigate = useNavigate()
+
+
+    const handleLogout = () => {
+        localStorage.removeItem("token")
+        navigate("/login")
+        showAlert({msg: "Logged out !", type: "success"})
+    }
 
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -29,10 +33,14 @@ export default function Navbar() {
                         </li>
                         
                     </ul>
+
+                    {!localStorage.getItem("token") ? 
                     <form className="d-flex" role="search">
                         <Link className="btn btn-outline-primary mx-1" to="/login" role="button" >Login</Link>
                         <Link className="btn btn-outline-primary mx-1" to="/signup" role="button" >Signup</Link>
                     </form>
+                    : 
+                    <button className="btn btn-outline-primary mx-1" onClick={handleLogout}>Logout</button>}
                 </div>
             </div>
         </nav>

@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import AddNote from './AddNote.js'
 import ShowNotes from './ShowNotes.js'
+import { useNavigate } from 'react-router-dom'
 
 export default function Home(props) {
   // Styles : 
@@ -15,9 +16,17 @@ export default function Home(props) {
     border: "1px solid #e5e5e5"
   }
 
-
+  const navigate = useNavigate()
+  const showHome= localStorage.getItem("token")
+  useEffect(()=> {
+    if(!showHome)
+      navigate("/login")
+      return
+      //eslint-disable-next-line
+  }, [])
 
   return (
+    showHome && 
     <div className='my-4'>
       <h2>Add a note : </h2>
 

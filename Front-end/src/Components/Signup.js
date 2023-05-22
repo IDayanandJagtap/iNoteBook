@@ -40,11 +40,11 @@ const Signup = ({showAlert}) => {
                 showAlert({msg: "Congratulations! account created successfully", type: "success"})
             }
             else{
-                showAlert({msg: "Something went wrong, please try again later !", type: "danger"})
+                showAlert({msg: response.error, type: "danger"})
             }
         }
         else{
-            alert("Password and confirm password are not same !");
+            showAlert({msg: "Password and confirm password should be same !", type: "danger"});
         }
     }
 
@@ -52,15 +52,15 @@ const Signup = ({showAlert}) => {
         <div className="my-5 d-flex justify-content-center align-items-center ">
             <div className="w-75">
             <div className='container p-3 d-flex flex-column justify-content-center align items center'>
-            <h2 >Please Signup to continue : </h2>
+            <h2 >Signup to iNoteBook : </h2>
                 <form className='p-3 my-2' style={formStyle} onSubmit={handleOnSubmit}>
                 <div className="mb-3">
                         <label htmlFor="name" className="form-label">Name : </label>
-                        <input type="text" className="form-control" id="name" name="name" value={credentials.name} onChange={handleOnChange}  required/>
+                        <input type="text" className="form-control" id="name" name="name" value={credentials.name} onChange={handleOnChange} autoFocus required/>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="email" className="form-label">Email address : </label>
-                        <input type="email" className="form-control" id="email" name="email" value={credentials.email} aria-describedby="emailHelp" onChange={handleOnChange} autoFocus required/>
+                        <input type="email" className="form-control" id="email" name="email" value={credentials.email} aria-describedby="emailHelp" onChange={handleOnChange}  required/>
                         <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
                     </div>
                     <div className="mb-3">

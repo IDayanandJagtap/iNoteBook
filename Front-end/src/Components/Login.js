@@ -46,7 +46,7 @@ const Login = ({showAlert}) => {
         <div className="my-5 d-flex justify-content-center align-items-center ">
             <div className="w-75">
             <div className='container p-3 d-flex flex-column justify-content-center align items center'>
-            <h2 >Please login to continue : </h2>
+            <h2 >Login to continue : </h2>
                 <form className='p-3 my-2' style={formStyle} onSubmit={handleOnSubmit}>
                     <div className="mb-3">
                         <label htmlFor="email" className="form-label">Email address</label>
