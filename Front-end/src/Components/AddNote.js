@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { NoteContext } from '../ContextApi/noteContext'
 
-export default function AddNote() {
+export default function AddNote({showAlert}) {
     const [note, setNote] = useState({title: "", description: "", tag: ""})
     const noteContext = useContext(NoteContext);
     const {addNote} = noteContext
@@ -11,9 +11,14 @@ export default function AddNote() {
         setNote({...note, [e.target.name] : e.target.value})
 
     }
-    const handleOnClick = (e) => {
+    const handleOnClick = async(e) => {
         e.preventDefault();
-        addNote(note)
+        const res = await addNote(note)
+        if(res.status === 200)
+            showAlert({msg:"New note added successfully", type:"success"})
+        else 
+            showAlert({msg:"Something went wrong", type: "danger"})
+
         setNote({title:"", description: "", tag:""})
     }
 

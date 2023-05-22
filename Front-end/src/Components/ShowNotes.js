@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { NoteContext } from '../ContextApi/noteContext'
 import NoteItem from './NoteItem'
 
-export default function ShowNotes() {
+export default function ShowNotes({showAlert}) {
     const noteContext = useContext(NoteContext)
     const { notes, getNotes, updateNote } = noteContext
 
@@ -25,10 +25,15 @@ export default function ShowNotes() {
         setNote({id: currentNote._id, title: currentNote.title, description: currentNote.description, tag: currentNote.tag})
     }
 
-    const updateChanges = (e) =>{
+    const updateChanges = async (e) =>{
         e.preventDefault();    
-        updateNote(note.id, note.title, note.description, note.tag)
+        const res = await updateNote(note.id, note.title, note.description, note.tag)
         closeModal.current.click()
+        
+        if(res.status === 200)
+            showAlert({msg: "Note updated successfully", type : "success"})
+        else
+            showAlert({msg: "Something went wrong !", type : "danger"})
     }
 
     return (
@@ -74,7 +79,7 @@ export default function ShowNotes() {
             <div className='row justify-content-md-center'>
                 {notes.length === 0 && "No notes to display "}
                 {notes.map((note) => {
-                    return <NoteItem key={note._id} note={note} editNote={editNote} />
+                    return <NoteItem key={note._id} note={note} editNote={editNote} showAlert={showAlert}/>
                 })}
             </div>
         </>

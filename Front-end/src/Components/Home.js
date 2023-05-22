@@ -2,7 +2,7 @@ import React from 'react'
 import AddNote from './AddNote.js'
 import ShowNotes from './ShowNotes.js'
 
-export default function Home() {
+export default function Home(props) {
   // Styles : 
   let notesContStyle = {
     borderRadius : "6px",
@@ -23,13 +23,13 @@ export default function Home() {
 
       <div className='container p-3 d-flex justify-content-center'>
         <div className="w-75 p-3" style={noteContStyle}>
-          <AddNote />
+          <AddNote showAlert={props.showAlert}/>
         </div>
       </div>
 
       <h2 className='mt-5 mb-4'>Your notes : </h2>
       <div className='container p-3' style={notesContStyle}>
-        <ShowNotes />
+        <ShowNotes showAlert={props.showAlert}/>
       </div>
 
     </div>

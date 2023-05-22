@@ -54,7 +54,10 @@ const NoteState = (props) => {
     })
 
     response = await response.json()
-    setNotes(notes.concat(response));
+    // response.json returns an object with two properties "status","data"
+    setNotes(notes.concat(response.data));
+    
+    return response
   }
 
   // Delete a note 
@@ -68,11 +71,13 @@ const NoteState = (props) => {
       }
     })
 
-    await response.json()
+    response = await response.json()
 
     // Delete in local
     const newNotes = notes.filter((note) => { return note._id !== id })
     setNotes(newNotes)
+
+    return response
   }
 
   // Update a note 
@@ -87,7 +92,7 @@ const NoteState = (props) => {
       body: JSON.stringify({title, description, tag})
     })
 
-    await response.json()
+    response = await response.json()
 
     // Update the note in local 
     const newNotes = notes.map((note) => {
@@ -99,6 +104,8 @@ const NoteState = (props) => {
       return note
     })
     setNotes(newNotes)
+
+    return response
 
   }
 

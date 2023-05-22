@@ -40,7 +40,7 @@ router.post("/addnote", fetchUser, [
                 title, description, tag, user : req.user.id,
             }) ;
             const savedNote = await note.save();
-            res.json(savedNote);
+            res.status(200).send({status: 200, data: savedNote});
 
         }catch(err){
             console.error(err.message);
@@ -71,7 +71,7 @@ router.put("/updatenote/:id", fetchUser, async(req, res) =>{
 
         updatedNote = await Note.findByIdAndUpdate(noteId, {$set: updatedNote}, {new:true});
 
-        res.json(updatedNote);
+        res.status(200).send({status: 200, data: updatedNote});
     }catch(err){
         return res.status(500).send("Internal server error !");
     }   
@@ -94,7 +94,7 @@ router.delete("/deletenote/:id", fetchUser, async(req, res) =>{
 
         note = await Note.findByIdAndDelete(noteId);
 
-        res.json({"Success": "Note has been deleted", note});
+        res.status(200).send({status: 200, data: note});
 
     }catch(err){
         return res.status(500).send("Internal server error !");

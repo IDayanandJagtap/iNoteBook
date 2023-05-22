@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const Login = () => {
+const Login = ({showAlert}) => {
     
     const formStyle = {
         backgroundColor: "#f8f9fa",
@@ -35,9 +35,10 @@ const Login = () => {
         if(response.success === "True"){
             localStorage.setItem("token", response.token)
             navigate("/")
+            showAlert({msg: "Welcome back chief !", type: "success"})
         }
         else{
-            alert("Invalid credentials")
+            showAlert({msg: "Please enter valid credentials !", type: "danger"})
         }
     }
 

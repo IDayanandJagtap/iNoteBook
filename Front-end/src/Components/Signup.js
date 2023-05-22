@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const Signup = () => {
+const Signup = ({showAlert}) => {
     
     const formStyle = {
         backgroundColor: "#f8f9fa",
@@ -37,9 +37,10 @@ const Signup = () => {
             if(response.success === "True"){
                 localStorage.setItem("token", response.token)
                 navigate("/")
+                showAlert({msg: "Congratulations! account created successfully", type: "success"})
             }
             else{
-                alert("Some error occured")
+                showAlert({msg: "Something went wrong, please try again later !", type: "danger"})
             }
         }
         else{
