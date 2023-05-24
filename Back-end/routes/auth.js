@@ -108,17 +108,16 @@ router.post("/login", [
     }
 )
 
-console.log(process.env.JWT_SECRET_KEY);
 
 //! 3. Create a route to fetch user info
 router.post('/getuser', fetchUser, async(req,res)=>{
     try{
         const userId = req.user.id;
         const user = await User.findById(userId).select("-password");
-        res.send(user);
+        res.status(200).send({success: "True", user: user});
     }catch(err){
         console.log(err.message);
-        res.status(500).send("Internal server error");
+        res.status(500).send({success: "False" , error : "Internal server error"});
     }
 })
 

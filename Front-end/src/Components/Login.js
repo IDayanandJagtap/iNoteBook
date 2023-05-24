@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { UserContext } from '../ContextApi/userContext'
 
 const Login = ({showAlert}) => {
     
@@ -10,6 +11,7 @@ const Login = ({showAlert}) => {
         border: "1px solid #e5e5e5"
     }
 
+    const {user, fetchUser} = useContext(UserContext)
     const [credentials, setCredentials] = useState({ email: "", password: "" })
     // Hook to redirect the page (react-router-dom provides it ... obviously because it handles routes)
     const navigate = useNavigate()
@@ -34,7 +36,8 @@ const Login = ({showAlert}) => {
         if(response.success === "True"){
             localStorage.setItem("token", response.token)
             navigate("/")
-            showAlert({msg: "Welcome back chief !", type: "success"})
+            await fetchUser()
+            showAlert({msg: `Welcome back ${user.name} !`, type: "success"})
         }
         else{
             showAlert({msg: "Please enter valid credentials !", type: "danger"})

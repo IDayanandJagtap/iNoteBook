@@ -8,7 +8,8 @@ export default function NoteItem({note, editNote, showAlert}) {
     let {_id, title, description,tag, createdAt, updatedAt} = note
 
     // Capitalize the tag
-    tag = tag[0].toUpperCase() + tag.slice(1)
+
+    if(tag) tag = tag[0].toUpperCase() + tag.slice(1)
     // Format dates
     createdAt = new Date(createdAt).toLocaleDateString("en-US")
     updatedAt = new Date(updatedAt).toLocaleDateString("en-US")

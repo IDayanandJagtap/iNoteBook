@@ -100,6 +100,7 @@ const NoteState = (props) => {
         note.title = title
         note.description = description
         note.tag = tag
+        note.updatedAt = new Date().toLocaleDateString('en-us')
       }
       return note
     })

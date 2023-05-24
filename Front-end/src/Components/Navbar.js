@@ -1,5 +1,5 @@
 import React from "react"
-import{Link, useLocation, useNavigate} from "react-router-dom"
+import{Link, useLocation} from "react-router-dom"
 
 // React-router-dom provides a hook useLocation that returns a object with location details including pathname ... using it we can set active state of the navbar button(links).
 // We have to use useEffect hook as well to get the current location on every new render
@@ -7,13 +7,11 @@ import{Link, useLocation, useNavigate} from "react-router-dom"
 
 export default function Navbar({showAlert}) {
     let location = useLocation(); 
-    const navigate = useNavigate()
 
-
-    const handleLogout = () => {
-        localStorage.removeItem("token")
-        navigate("/login")
-        showAlert({msg: "Logged out !", type: "success"})
+    const handleOnUserClick = () => {
+        // Toggle btn from userBoard component to open the dashboard
+        let openBtn = document.getElementById("openOffCanvas")
+        openBtn.click()
     }
 
     return (
@@ -40,7 +38,8 @@ export default function Navbar({showAlert}) {
                         <Link className="btn btn-outline-primary mx-1" to="/signup" role="button" >Signup</Link>
                     </form>
                     : 
-                    <button className="btn btn-outline-primary mx-1" onClick={handleLogout}>Logout</button>}
+                    <i role="button" className="fa-solid fa-user fa-xl mx-2 text-secondary" onClick={handleOnUserClick}></i>}
+                    {/* <button className="btn btn-outline-primary mx-1" onClick={handleLogout}>Logout</button>} */}
                 </div>
             </div>
         </nav>

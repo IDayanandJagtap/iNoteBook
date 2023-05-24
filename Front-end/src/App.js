@@ -5,9 +5,11 @@ import Navbar from "./Components/Navbar";
 import Home from "./Components/Home";
 import About from "./Components/About";
 import {NoteState} from './ContextApi/noteContext'
+import { UserState } from "./ContextApi/userContext"; 
 import Login from "./Components/Login";
 import Signup from "./Components/Signup";
 import Alert from "./Components/Alert";
+import UserBoard from "./Components/UserBoard";
 
 // Wrap all the elements in context api which wants to use the context.
 
@@ -23,10 +25,12 @@ function App() {
   }
 
   return (
+  <UserState>
   <NoteState>
     <BrowserRouter>
         <Navbar showAlert={showAlert}/>
         <Alert alert={alert}/>
+        <UserBoard showAlert={showAlert}/>
         <div className="container" >
             <Routes>
               <Route exact path="/" element={<Home showAlert={showAlert}/>} />
@@ -37,6 +41,7 @@ function App() {
         </div>
     </BrowserRouter>
   </NoteState> 
+  </UserState>
   );
 }
 

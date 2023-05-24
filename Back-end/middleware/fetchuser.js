@@ -8,9 +8,8 @@ const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
 
 const fetchUser = (req,res,next) =>{
     const token = req.header("auth-token");
-
     if(!token){
-        res.status(401).send("Please enter a valid token !");
+        res.status(500).send({success: "False" , error : "Please enter a valid token"});
         return ;
     }
 
@@ -20,7 +19,7 @@ const fetchUser = (req,res,next) =>{
         next();
     }catch(err){
         console.log(err.message);
-        res.status(500).send("Internal server error !");
+        res.status(500).send({success: "False" , error : "Internal server error in middle"});
     }
         
     
