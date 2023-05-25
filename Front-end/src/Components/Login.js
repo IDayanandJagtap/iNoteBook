@@ -37,7 +37,7 @@ const Login = ({showAlert}) => {
             localStorage.setItem("token", response.token)
             navigate("/")
             await fetchUser()
-            showAlert({msg: `Welcome back ${user.name} !`, type: "success"})
+            showAlert({msg: `Welcome back ${user.name} !`, type: "info"})
         }
         else{
             showAlert({msg: "Please enter valid credentials !", type: "danger"})

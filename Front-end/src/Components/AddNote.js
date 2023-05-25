@@ -9,13 +9,13 @@ export default function AddNote({showAlert}) {
     const handleOnChange = (e) => {
         // Retain the previous object and add or overwrite the following fields
         setNote({...note, [e.target.name] : e.target.value})
-
     }
+    
     const handleOnClick = async(e) => {
         e.preventDefault();
         const res = await addNote(note)
         if(res.status === 200)
-            showAlert({msg:"New note added successfully", type:"success"})
+            showAlert({msg:"New note added ", type:"info"})
         else 
             showAlert({msg:"Something went wrong", type: "danger"})
 

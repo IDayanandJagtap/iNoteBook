@@ -39,7 +39,7 @@ const Signup = ({showAlert}) => {
             if(response.success === "True"){
                 localStorage.setItem("token", response.token)
                 navigate("/")
-                showAlert({msg: "Congratulations! account created successfully", type: "success"})
+                showAlert({msg: "Congratulations! account created successfully", type: "info"})
                 await fetchUser()
             }
             else{

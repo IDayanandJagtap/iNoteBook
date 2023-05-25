@@ -1,4 +1,4 @@
-import React, { useRef,  useContext} from 'react'
+import React, { useRef,  useContext, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../ContextApi/userContext'
 import { NoteContext } from '../ContextApi/noteContext'
@@ -6,18 +6,26 @@ import { NoteContext } from '../ContextApi/noteContext'
 const UserBoard = ({showAlert}) => {
     const {user, setUser} = useContext(UserContext)
     const {notes} = useContext(NoteContext)
-
     const navigate = useNavigate()
     const toggleBtn = useRef(null)
     
     const handleLogout = () => {
         localStorage.removeItem("token")
+        localStorage.removeItem("userinfo")
+
         navigate("/login")
-        showAlert({msg: "Logged out !", type: "success"})
+        showAlert({msg: "Logged out !", type: "info"})
         toggleBtn.current.click()
+
         setUser({ _id: "", name: "", email: "" })
     }
 
+    useEffect(()=> {
+        let name = localStorage.getItem("username")
+        let email = localStorage.getItem("useremail")
+        setUser({name:name, email:email})
+        //eslint-disable-next-line
+    }, [])
 
     return (
         <div>

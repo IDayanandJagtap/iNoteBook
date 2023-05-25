@@ -31,7 +31,7 @@ export default function ShowNotes({showAlert}) {
         closeModal.current.click()
         
         if(res.status === 200)
-            showAlert({msg: "Note updated successfully", type : "success"})
+            showAlert({msg: "Note updated successfully", type : "info"})
         else
             showAlert({msg: "Something went wrong !", type : "danger"})
     }
