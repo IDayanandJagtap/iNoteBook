@@ -76,7 +76,7 @@ export default function ShowNotes({showAlert}) {
             </div>
 
             {/* Show note items */}
-            <div className='row justify-content-md-center'>
+            <div className='row justify-content-md-center' id="notes">
                 {notes.length === 0 && "No notes to display "}
                 {notes.map((note) => {
                     return <NoteItem key={note._id} note={note} editNote={editNote} showAlert={showAlert}/>

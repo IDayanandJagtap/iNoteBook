@@ -20,6 +20,13 @@ const UserBoard = ({showAlert}) => {
         setUser({ _id: "", name: "", email: "" })
     }
 
+    const handleViewNotes = () => {
+        toggleBtn.current.click()
+        const elem = document.getElementById("notes")
+        if(elem)
+            elem.scrollIntoView({behavior:'smooth'})
+    }
+
     useEffect(()=> {
         let name = localStorage.getItem("username")
         let email = localStorage.getItem("useremail")
@@ -41,7 +48,7 @@ const UserBoard = ({showAlert}) => {
                     <div className='d-flex align-items-center column-gap-3 my-1 py-2'><i className="fa-solid fa-user-tie fa-xl text-secondary"></i><div>{user.name}</div></div>
                         <div className='d-flex align-items-center column-gap-3 my-1 py-2'><i className="fa-solid fa-envelope fa-xl text-secondary"></i> <div>{user.email}</div></div>
                         <div className='d-flex align-items-center column-gap-3 my-1 py-2'><i className="fa-solid fa-newspaper fa-xl text-secondary"></i> <div>Total notes : {notes.length}</div></div>
-                        <div className='d-flex align-items-center column-gap-3 my-1 py-2'><i className="fa-solid fa-folder-open fa-xl text-secondary"></i> <div>View all notes</div></div>
+                        <div className='d-flex align-items-center column-gap-3 my-1 py-2' role="button" onClick={handleViewNotes}><i className="fa-solid fa-folder-open fa-xl text-secondary" ></i> <div>View all notes</div></div>
                     </div>
                     <div className="text-center pointer" role="button">
                         <span className="fw-semibold text-secondary" onClick={handleLogout}>Logout</span> &nbsp;<i className="fa-solid fa-arrow-right-from-bracket"></i>
