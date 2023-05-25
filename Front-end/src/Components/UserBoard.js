@@ -8,6 +8,10 @@ const UserBoard = ({showAlert}) => {
     const {notes} = useContext(NoteContext)
     const navigate = useNavigate()
     const toggleBtn = useRef(null)
+
+    const dashStyle = {
+        transtion : "0.5s linear"
+    }
     
     const handleLogout = () => {
         localStorage.removeItem("token")
@@ -38,8 +42,8 @@ const UserBoard = ({showAlert}) => {
         <div>
             <button hidden className="btn btn-primary" ref={toggleBtn} type="button" id="openOffCanvas" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button>
 
-            <div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-                <div className="offcanvas-header d-flex align-items-center"  style={{padding: "8px 16px", borderBottom: "1px solid #b4b4b4"}}>
+            <div style={dashStyle} className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" >
+                <div  className="offcanvas-header d-flex align-items-center"  style={{padding: "8px 16px", borderBottom: "1px solid #b4b4b4"}}>
                     <h5 className="offcanvas-title" id="offcanvasRightLabel">Hello <br /> <p className="fs-6 fw-semibold text-secondary">{user.name}</p></h5>
                     <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
